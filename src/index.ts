@@ -9,11 +9,6 @@ class APIHose {
         suffix: "Type",
         lang: "zh-CN",
         align: "center",
-        i18n: {
-            thead: ["参数", "类型", "说明"],
-            optional: "可选",
-            method: "请求方法",
-        },
     }
 
     _opts: APIHoseOptions = {}

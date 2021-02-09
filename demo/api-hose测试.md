@@ -13,7 +13,7 @@
 
 | 参数 | 类型 | 说明 |
 | :---: | :---: | :---: |
-| a | string |  输出a变量类型为string (可选) |
+| a | string |  输出a变量类型为string (可选的) |
 | b | number |  输出b变量类型为number |
 | c | boolean |  输出变量c类型为boolean |
 | d | any |  输出变量d类型为any |
@@ -27,4 +27,4 @@
 
 | 参数 | 类型 | 说明 |
 | :---: | :---: | :---: |
-| hh | string |  输出变量hh类型为string (可选) |
+| hh | string |  输出变量hh类型为string (可选的) |

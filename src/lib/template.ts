@@ -94,11 +94,11 @@ export const TempTableContent = (
             `${prefix}([A-Za-z0-9\\$\\_]+)${suffix}`
         )
         if (BasicType.includes(ans[1])) {
-            exportType = `Array<${ans[1]}>`
+            exportType = `Array\<${ans[1]}\>`
         } else if (RequestHeadingRegExp.test(ans[1])) {
             // 过滤请求类型
             const subAns = RequestHeadingRegExp.exec(ans[1]) as RegExpExecArray
-            exportType = `Array<[${subAns[1]}](#${subAns[1]})>`
+            exportType = `Array\<[${subAns[1]}](#${subAns[1]})\>`
         } else {
             exportType = `[${type}](${type})`
         }
