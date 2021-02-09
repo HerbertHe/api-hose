@@ -114,5 +114,5 @@ export const TempTableContent = (
  * 参数表格结束模板
  */
 export const TempTableEnd = () => {
-    return `\n`
+    return ""
 }
