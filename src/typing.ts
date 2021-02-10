@@ -3,11 +3,13 @@
  * @param {Array<string>} thead 表头信息
  * @param {string} optional 自定义
  * @param {string} method 请求方法
+ * @param {string} extends 继承描述
  */
 export interface I18nType {
     thead?: Array<string>
     optional?: string
     method?: string
+    extends?: string
 }
 
 /**

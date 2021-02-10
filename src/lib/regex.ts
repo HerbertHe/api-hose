@@ -18,7 +18,7 @@ export const ArrayTypeRegEx = /Array<(\S+)>/
  */
 export const RequestHeadingRegEx = (prefix: string, suffix: string) => {
     return new RegExp(
-        `((?! export).)*\\s*interface\\s*(${prefix}[A-Za-z0-9\\$\\_]+${suffix})\\s*{`
+        `((?! export).)*\\s*interface\\s*(${prefix}[A-Za-z0-9\\$\\_]+${suffix})\\s*(extends\\s*([A-Za-z0-9\\$\\_\\, ]+))?\\s*\\{ *\\}?\\s*`
     )
 }
 
@@ -26,7 +26,7 @@ export const RequestHeadingRegEx = (prefix: string, suffix: string) => {
  * 普通标题正则表达式
  */
 export const SimpleHeadingRegEx = new RegExp(
-    `((?! export).)*\\s*interface\\s*([A-Za-z0-9\\$\\_]+)\\s*{`
+    `((?! export).)*\\s*interface\\s*([A-Za-z0-9\\$\\_]+)\\s*(extends\\s*([A-Za-z0-9\\$\\_\\, ]+))?\\s*\\{ *\\}?\\s*`
 )
 
 /**

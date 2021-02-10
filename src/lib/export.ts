@@ -31,11 +31,13 @@ export const exporter = async (
         thead: ["参数", "类型", "说明"],
         optional: "可选的",
         method: "请求方法",
+        extends: "继承",
     }
     const defaultI18nEn: I18nType = {
         thead: ["Params", "Type", "Description"],
         optional: "optional",
         method: "Method",
+        extends: "Extends",
     }
     // 临时存放请求参数生成结果的数组, 检测到结束符的时候释放掉
     let _paramsResArrayTmp: Array<string> = []
@@ -64,11 +66,28 @@ export const exporter = async (
                 opts.prefix as string,
                 opts.suffix as string
             ).exec(item) as RegExpExecArray
-            _resArrayTmp.push(TempHeading(ans[2]))
+            const extendsType: Array<string> = !!ans[3]
+                ? ans[4].split(",").map((item: string) => item.trim())
+                : []
+            const extendsDesc = (!!opts.i18n?.extends
+                ? opts.i18n.extends
+                : opts.lang === "en-US"
+                ? defaultI18nEn.extends
+                : defaultI18nzhCN.extends) as string
+
+            _resArrayTmp.push(TempHeading(ans[2], extendsType, extendsDesc))
             return
         } else if (SimpleHeadingRegEx.test(item)) {
             const ans = SimpleHeadingRegEx.exec(item) as RegExpExecArray
-            _resArrayTmp.push(TempHeading(ans[2]))
+            const extendsType: Array<string> = !!ans[3]
+                ? ans[4].split(",").map((item: string) => item.trim())
+                : []
+            const extendsDesc = (!!opts.i18n?.extends
+                ? opts.i18n.extends
+                : opts.lang === "en-US"
+                ? defaultI18nEn.extends
+                : defaultI18nzhCN.extends) as string
+            _resArrayTmp.push(TempHeading(ans[2], extendsType, extendsDesc))
             return
         }
 

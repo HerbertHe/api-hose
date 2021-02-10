@@ -1,6 +1,6 @@
 import { AlignType } from "../typing";
 /**
- *
+ * 生成文件版权模板
  */
 export declare const TempCopyright: () => string[];
 /**
@@ -12,7 +12,7 @@ export declare const TempFilename: (filename: string) => string;
  * 标题名模板
  * @param heading 标题名
  */
-export declare const TempHeading: (heading: string) => string;
+export declare const TempHeading: (heading: string, extendsType: Array<string>, extendsDesc: string) => string;
 /**
  * API描述模板
  * @param desc 描述信息

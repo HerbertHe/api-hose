@@ -42,3 +42,9 @@
 ## TestMultiLineType
 
 > string | [SimpleType](#SimpleType) | undefined | any | string | boolean | Array\<[SimpleType](#SimpleType)\>
+
+***测试接口继承***
+
+## TestAAAType
+
+> 继承: [TestMultiLineType](#TestMultiLineType), [TestAType](#TestAType)

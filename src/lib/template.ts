@@ -1,13 +1,26 @@
 import { AlignType } from "../typing"
-import {
-    ArrayTypeRegEx,
-    BasicType,
-    RequestHeadingRegEx,
-    SimpleHeadingRegEx,
-} from "./regex"
+import { ArrayTypeRegEx, BasicType } from "./regex"
+
+const tempType = (type: string): string => {
+    if (BasicType.includes(type)) {
+        return type
+    } else if (ArrayTypeRegEx.test(type)) {
+        const ans = ArrayTypeRegEx.exec(type) as RegExpExecArray
+        if (BasicType.includes(ans[1])) {
+            // 检查标准类型
+            return `Array\\<${ans[1]}\\>`
+        } else {
+            // 自定义类型
+            return `Array\\<[${ans[1]}](#${ans[1]})\\>`
+        }
+    } else {
+        // 自定义类型
+        return `[${type}](#${type})`
+    }
+}
 
 /**
- *
+ * 生成文件版权模板
  */
 export const TempCopyright = () => {
     const array = [
@@ -34,8 +47,20 @@ export const TempFilename = (filename: string) => {
  * 标题名模板
  * @param heading 标题名
  */
-export const TempHeading = (heading: string) => {
-    return `## ${heading}\n`
+export const TempHeading = (
+    heading: string,
+    extendsType: Array<string>,
+    extendsDesc: string
+) => {
+    const _exportExtendsType: Array<string> =
+        extendsType.length !== 0
+            ? extendsType.map((item: string) => tempType(item))
+            : []
+    return `## ${heading}\n${
+        _exportExtendsType.length !== 0
+            ? `\n> ${extendsDesc}: ${_exportExtendsType.join(", ")}\n`
+            : ""
+    }`
 }
 
 /**
@@ -63,24 +88,6 @@ const TempAlign = (align: AlignType) => {
             return `| ---: | ---: | ---: |`
         case "center":
             return `| :---: | :---: | :---: |`
-    }
-}
-
-const tempType = (type: string): string => {
-    if (BasicType.includes(type)) {
-        return type
-    } else if (ArrayTypeRegEx.test(type)) {
-        const ans = ArrayTypeRegEx.exec(type) as RegExpExecArray
-        if (BasicType.includes(ans[1])) {
-            // 检查标准类型
-            return `Array\\<${ans[1]}\\>`
-        } else {
-            // 自定义类型
-            return `Array\\<[${ans[1]}](#${ans[1]})\\>`
-        }
-    } else {
-        // 自定义类型
-        return `[${type}](#${type})`
     }
 }
 
@@ -125,6 +132,6 @@ export const TempTableEnd = () => {
  * @param types 联合类型数组
  */
 export const TempType = (heading: string, types: Array<string>) => {
-    let _ansTypes: Array<string> = types.map((item: string) => tempType(item))
+    const _ansTypes: Array<string> = types.map((item: string) => tempType(item))
     return `## ${heading}\n\n> ${_ansTypes.join(" | ")}\n`
 }

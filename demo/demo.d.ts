@@ -36,3 +36,8 @@ type TestMultiLineType =
     | string
     | boolean
     | Array<SimpleType>
+
+/**
+ * 测试接口继承
+ */
+interface TestAAAType extends TestMultiLineType, TestAType {}
