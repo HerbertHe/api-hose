@@ -37,8 +37,14 @@ export declare const TempTableHead: (head: Array<string>, align: AlignType) => s
  * @param desc 参数描述
  * @param optional 可选描述
  */
-export declare const TempTableContent: (name: string, type: string, desc: string, optional: string, prefix: string, suffix: string) => string;
+export declare const TempTableContent: (name: string, type: string, desc: string, optional: string) => string;
 /**
  * 参数表格结束模板
  */
 export declare const TempTableEnd: () => string;
+/**
+ * 类型定义与联合类型模板
+ * @param heading 定义的类型名称
+ * @param types 联合类型数组
+ */
+export declare const TempType: (heading: string, types: Array<string>) => string;

@@ -5,26 +5,40 @@
 
 # api-hose测试
 
-> 测试请求API
+***测试请求API***
+
+***两行描述***
 
 请求方法: `GET`
 
-## XXX
+## ReqXXXType
 
 | 参数 | 类型 | 说明 |
 | :---: | :---: | :---: |
 | a | string |  输出a变量类型为string (可选的) |
 | b | number |  输出b变量类型为number |
 | c | boolean |  输出变量c类型为boolean |
-| d | any |  输出变量d类型为any |
-| e | Array<[XXX](#XXX)> |  输出变量e类型为XXX类型的引用 |
+| d | [ReqXXXType](#ReqXXXType) |  输出变量d类型为any |
+| e | Array\<[ReqXXXType](#ReqXXXType)\> |  输出变量e类型为XXX类型的引用 |
 | f | undefined |  输出f的变量类型为undefined |
 | g | null |  输出变量g类型为null |
 
-> 测试一般类型
+***测试一般类型***
 
 ## SimpleType
 
 | 参数 | 类型 | 说明 |
 | :---: | :---: | :---: |
 | hh | string |  输出变量hh类型为string (可选的) |
+
+***测试Type类型定义***
+
+## TestAType
+
+> [ReqXXXType](#ReqXXXType) | string
+
+***测试多行Type***
+
+## TestMultiLineType
+
+> string | [SimpleType](#SimpleType) | undefined | any | string | boolean | Array\<[SimpleType](#SimpleType)\>

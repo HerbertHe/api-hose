@@ -1,5 +1,8 @@
 import { AlignType, APIHoseOptions, I18nType } from "../typing"
 import {
+    DeclareInlineTypeRegEx,
+    DeclareMultiTypeHeadRegEx,
+    DeclareMultiTypeContentRegEx,
     RequestDescRegEx,
     RequestHeadingRegEx,
     RequestMethodRegEx,
@@ -16,6 +19,7 @@ import {
     TempTableContent,
     TempTableEnd,
     TempTableHead,
+    TempType,
 } from "./template"
 
 // 对应输出的内容
@@ -37,6 +41,10 @@ export const exporter = async (
     let _paramsResArrayTmp: Array<string> = []
     // 临时存放生成结果的数组
     let _resArrayTmp: Array<string> = []
+    // 临时存放多行联合类型的数组
+    let _resUnionTypeTmp: Array<string> = []
+    // 多行联合类型的名称
+    let _multiheadTmp: string = ""
 
     contentArray.map((item: string, index: number) => {
         if (index === 0) {
@@ -104,9 +112,7 @@ export const exporter = async (
                     ans[1],
                     ans[3],
                     !!ans[5] ? ans[5] : "",
-                    !!ans[2] ? optional : "",
-                    opts.prefix as string,
-                    opts.suffix as string
+                    !!ans[2] ? optional : ""
                 )
             )
             return
@@ -119,6 +125,38 @@ export const exporter = async (
                 TempTableEnd(),
             ]
             _paramsResArrayTmp = []
+            return
+        }
+
+        if (DeclareInlineTypeRegEx.test(item)) {
+            // 单行的情况
+            const ans = DeclareInlineTypeRegEx.exec(item) as RegExpExecArray
+            const types = ans[2].split("|").map((item: string) => item.trim())
+            _resArrayTmp.push(TempType(ans[1], types))
+            return
+        } else if (DeclareMultiTypeHeadRegEx.test(item)) {
+            // 多行头
+            const heading = DeclareMultiTypeHeadRegEx.exec(
+                item
+            ) as RegExpExecArray
+            _multiheadTmp = heading[1]
+            return
+        } else if (DeclareMultiTypeContentRegEx.test(item)) {
+            // 多行内容
+            const type = DeclareMultiTypeContentRegEx.exec(
+                item
+            ) as RegExpExecArray
+            _resUnionTypeTmp.push(type[1])
+            // 判断下一项越界
+            // 判断下一项是当前类型
+            if (
+                index === contentArray.length ||
+                !DeclareMultiTypeContentRegEx.test(contentArray[index + 1])
+            ) {
+                _resArrayTmp.push(TempType(_multiheadTmp, _resUnionTypeTmp))
+                // 释放临时数组
+                _resUnionTypeTmp = []
+            }
             return
         }
     })

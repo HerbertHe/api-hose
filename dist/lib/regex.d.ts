@@ -12,6 +12,18 @@ export declare const RequestHeadingRegEx: (prefix: string, suffix: string) => Re
  */
 export declare const SimpleHeadingRegEx: RegExp;
 /**
+ * 类型定义正则表达式单行
+ */
+export declare const DeclareInlineTypeRegEx: RegExp;
+/**
+ * 类型定义正则表达式多行
+ */
+export declare const DeclareMultiTypeHeadRegEx: RegExp;
+/**
+ * 通过测试下一项来考虑是否结束
+ */
+export declare const DeclareMultiTypeContentRegEx: RegExp;
+/**
  * 请求描述正则表达式
  */
 export declare const RequestDescRegEx: RegExp;

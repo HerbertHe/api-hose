@@ -18,7 +18,7 @@ export const ArrayTypeRegEx = /Array<(\S+)>/
  */
 export const RequestHeadingRegEx = (prefix: string, suffix: string) => {
     return new RegExp(
-        `((?! export).)*\\s*interface\\s*${prefix}([A-Za-z0-9\\$\\_]+)${suffix}\\s*{`
+        `((?! export).)*\\s*interface\\s*(${prefix}[A-Za-z0-9\\$\\_]+${suffix})\\s*{`
     )
 }
 
@@ -28,6 +28,21 @@ export const RequestHeadingRegEx = (prefix: string, suffix: string) => {
 export const SimpleHeadingRegEx = new RegExp(
     `((?! export).)*\\s*interface\\s*([A-Za-z0-9\\$\\_]+)\\s*{`
 )
+
+/**
+ * 类型定义正则表达式单行
+ */
+export const DeclareInlineTypeRegEx = /\s*type\s*([A-Za-z0-9\$\_]+)\s*=\s*([A-Za-z0-9\$\_\| ]+)/
+
+/**
+ * 类型定义正则表达式多行
+ */
+export const DeclareMultiTypeHeadRegEx = /\s*type\s*([A-Za-z0-9\$\_]+)\s*= */
+
+/**
+ * 通过测试下一项来考虑是否结束
+ */
+export const DeclareMultiTypeContentRegEx = /\s*\| *([A-Za-z0-9\$\_\<\>]+) */
 
 /**
  * 请求描述正则表达式
