@@ -149,9 +149,17 @@ export const exporter = async (
 
         if (DeclareInlineTypeRegEx.test(item)) {
             // 单行的情况
+            let type: number = 0
+            let types: Array<string> = []
             const ans = DeclareInlineTypeRegEx.exec(item) as RegExpExecArray
-            const types = ans[2].split("|").map((item: string) => item.trim())
-            _resArrayTmp.push(TempType(ans[1], types))
+            if (ans[2].includes("&")) {
+                types = ans[2].split("&").map((item: string) => item.trim())
+                type = 1
+            } else {
+                types = ans[2].split("|").map((item: string) => item.trim())
+                type = 0
+            }
+            _resArrayTmp.push(TempType(ans[1], types, type))
             return
         } else if (DeclareMultiTypeHeadRegEx.test(item)) {
             // 多行头
@@ -172,7 +180,7 @@ export const exporter = async (
                 index === contentArray.length ||
                 !DeclareMultiTypeContentRegEx.test(contentArray[index + 1])
             ) {
-                _resArrayTmp.push(TempType(_multiheadTmp, _resUnionTypeTmp))
+                _resArrayTmp.push(TempType(_multiheadTmp, _resUnionTypeTmp, 0))
                 // 释放临时数组
                 _resUnionTypeTmp = []
             }

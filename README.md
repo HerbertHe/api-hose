@@ -74,6 +74,11 @@ export interface SimpleType {
 }
 
 /**
+ * 测试单类型定义
+ */
+type TestBType = string
+
+/**
  * 测试Type类型定义
  */
 type TestAType = ReqXXXType | string
@@ -93,11 +98,16 @@ type TestMultiLineType =
 /**
  * 测试接口继承
  */
-interface TestAAAType extends TestMultiLineType, TestAType {}
+interface TestAAAType extends TestMultiLineType, SimpleType {}
+
+/**
+ * 测试交叉类型
+ */
+type TestAnAType = ReqXXXType & SimpleType
 
 ```
 
-- 转化结果
+- markdown
 
 ```markdown
 # api-hose测试
@@ -128,6 +138,12 @@ interface TestAAAType extends TestMultiLineType, TestAType {}
 | :---: | :---: | :---: |
 | hh | string |  输出变量hh类型为string (可选的) |
 
+***测试单类型定义***
+
+## TestBType
+
+> string
+
 ***测试Type类型定义***
 
 ## TestAType
@@ -144,7 +160,13 @@ interface TestAAAType extends TestMultiLineType, TestAType {}
 
 ## TestAAAType
 
-> 继承: [TestMultiLineType](#TestMultiLineType), [TestAType](#TestAType)
+> 继承: [TestMultiLineType](#TestMultiLineType), [SimpleType](#SimpleType)
+
+***测试交叉类型***
+
+## TestAnAType
+
+> [ReqXXXType](#ReqXXXType) & [SimpleType](#SimpleType)
 
 ```
 

@@ -130,8 +130,15 @@ export const TempTableEnd = () => {
  * 类型定义与联合类型模板
  * @param heading 定义的类型名称
  * @param types 联合类型数组
+ * @param type 区别交叉类型和联合类型
  */
-export const TempType = (heading: string, types: Array<string>) => {
+export const TempType = (
+    heading: string,
+    types: Array<string>,
+    type: number
+) => {
     const _ansTypes: Array<string> = types.map((item: string) => tempType(item))
-    return `## ${heading}\n\n> ${_ansTypes.join(" | ")}\n`
+    return `## ${heading}\n\n> ${_ansTypes.join(
+        ` ${type === 0 ? "|" : "&"} `
+    )}\n`
 }

@@ -31,6 +31,12 @@
 | :---: | :---: | :---: |
 | hh | string |  输出变量hh类型为string (可选的) |
 
+***测试单类型定义***
+
+## TestBType
+
+> string
+
 ***测试Type类型定义***
 
 ## TestAType
@@ -47,4 +53,10 @@
 
 ## TestAAAType
 
-> 继承: [TestMultiLineType](#TestMultiLineType), [TestAType](#TestAType)
+> 继承: [TestMultiLineType](#TestMultiLineType), [SimpleType](#SimpleType)
+
+***测试交叉类型***
+
+## TestAnAType
+
+> [ReqXXXType](#ReqXXXType) & [SimpleType](#SimpleType)

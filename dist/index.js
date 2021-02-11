@@ -891,7 +891,7 @@ var SimpleHeadingRegEx = new RegExp("((?! export).)*\\s*interface\\s*([A-Za-z0-9
  * 类型定义正则表达式单行
  */
 
-var DeclareInlineTypeRegEx = /\s*type\s*([A-Za-z0-9\$\_]+)\s*=\s*([A-Za-z0-9\$\_\| ]+)/;
+var DeclareInlineTypeRegEx = /\s*type\s*([A-Za-z0-9\$\_]+)\s*=\s*([A-Za-z0-9\$\_\|& ]+)/;
 /**
  * 类型定义正则表达式多行
  */
@@ -1036,14 +1036,15 @@ var TempTableEnd = function TempTableEnd() {
  * 类型定义与联合类型模板
  * @param heading 定义的类型名称
  * @param types 联合类型数组
+ * @param type 区别交叉类型和联合类型
  */
 
-var TempType = function TempType(heading, types) {
+var TempType = function TempType(heading, types, type) {
   var _ansTypes = types.map(function (item) {
     return tempType(item);
   });
 
-  return "## ".concat(heading, "\n\n> ").concat(_ansTypes.join(" | "), "\n");
+  return "## ".concat(heading, "\n\n> ").concat(_ansTypes.join(" ".concat(type === 0 ? "|" : "&", " ")), "\n");
 };
 
 var exporter = /*#__PURE__*/function () {
@@ -1156,13 +1157,24 @@ var exporter = /*#__PURE__*/function () {
 
               if (DeclareInlineTypeRegEx.test(item)) {
                 // 单行的情况
+                var type = 0;
+                var types = [];
+
                 var _ans5 = DeclareInlineTypeRegEx.exec(item);
 
-                var types = _ans5[2].split("|").map(function (item) {
-                  return item.trim();
-                });
+                if (_ans5[2].includes("&")) {
+                  types = _ans5[2].split("&").map(function (item) {
+                    return item.trim();
+                  });
+                  type = 1;
+                } else {
+                  types = _ans5[2].split("|").map(function (item) {
+                    return item.trim();
+                  });
+                  type = 0;
+                }
 
-                _resArrayTmp.push(TempType(_ans5[1], types));
+                _resArrayTmp.push(TempType(_ans5[1], types, type));
 
                 return;
               } else if (DeclareMultiTypeHeadRegEx.test(item)) {
@@ -1172,14 +1184,14 @@ var exporter = /*#__PURE__*/function () {
                 return;
               } else if (DeclareMultiTypeContentRegEx.test(item)) {
                 // 多行内容
-                var type = DeclareMultiTypeContentRegEx.exec(item);
+                var _type = DeclareMultiTypeContentRegEx.exec(item);
 
-                _resUnionTypeTmp.push(type[1]); // 判断下一项越界
+                _resUnionTypeTmp.push(_type[1]); // 判断下一项越界
                 // 判断下一项是当前类型
 
 
                 if (index === contentArray.length || !DeclareMultiTypeContentRegEx.test(contentArray[index + 1])) {
-                  _resArrayTmp.push(TempType(_multiheadTmp, _resUnionTypeTmp)); // 释放临时数组
+                  _resArrayTmp.push(TempType(_multiheadTmp, _resUnionTypeTmp, 0)); // 释放临时数组
 
 
                   _resUnionTypeTmp = [];

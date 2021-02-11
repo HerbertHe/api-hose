@@ -46,5 +46,6 @@ export declare const TempTableEnd: () => string;
  * 类型定义与联合类型模板
  * @param heading 定义的类型名称
  * @param types 联合类型数组
+ * @param type 区别交叉类型和联合类型
  */
-export declare const TempType: (heading: string, types: Array<string>) => string;
+export declare const TempType: (heading: string, types: Array<string>, type: number) => string;

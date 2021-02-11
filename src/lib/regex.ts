@@ -32,7 +32,7 @@ export const SimpleHeadingRegEx = new RegExp(
 /**
  * 类型定义正则表达式单行
  */
-export const DeclareInlineTypeRegEx = /\s*type\s*([A-Za-z0-9\$\_]+)\s*=\s*([A-Za-z0-9\$\_\| ]+)/
+export const DeclareInlineTypeRegEx = /\s*type\s*([A-Za-z0-9\$\_]+)\s*=\s*([A-Za-z0-9\$\_\|& ]+)/
 
 /**
  * 类型定义正则表达式多行
